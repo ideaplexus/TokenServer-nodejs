@@ -42,7 +42,7 @@ var generateAccessToken = function (req, resp) {
     token.addPriviledge(Priviledges.kJoinChannel, expiredTs);
     return resp.json({ 'token': token.build() });
 };
-app.use(express.static('./streamer-page/build/'))
+app.use(express.static('./streamer-page/'))
 app.get('/access_token', nocache, generateAccessToken);
 
 app.listen(PORT, function () {
