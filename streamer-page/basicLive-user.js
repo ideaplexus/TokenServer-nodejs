@@ -8,20 +8,20 @@ var remoteUsers = {};
 var options = { 
   appid: "88b765a2930f40cf8d0a5790701f043b",
   channel: "datas",
-  uid: "231123",
+  uid: "23213112",
   token: null,
-  role: "host" // host or audience
+  role: "audience" // host or audience
 };
 
 // the demo can auto join channel with params in url
 $(() => {
   var urlParams = new URL(location.href).searchParams;
-  options.appid ="88b765a2930f40cf8d0a5790701f043b";
-  options.channel = "datas";
+  options.appid = "88b765a2930f40cf8d0a5790701f043b"
+  options.channel = "datas"
   options.token = "";
-  if ( window.location.pathname == "/seller.html") {
-    options.role = "host"
-  token_url='/access_token?'+"channel=datas"+"&uid="+"231123"
+
+  options.role = "audience"
+  token_url='/access_token?'+"channel=datas"+"&uid="+"23213112"
   $.get(token_url,  // url
   function (data, textStatus, jqXHR) {  // success callback
       // alert('status: ' + textStatus + ', data:' + data);
@@ -29,18 +29,8 @@ $(() => {
       console.log(token_url,data.token)
       options.token = data.token;     
     });
-  }
-  else{
-    options.role = "audience"
-    token_url='/access_token?'+"channel=datas"+"&uid="+"2321311"
-    $.get(token_url,  // url
-    function (data, textStatus, jqXHR) {  // success callback
-        // alert('status: ' + textStatus + ', data:' + data);
-        console.log(window.location.pathname)
-        console.log(token_url,data.token)
-        options.token = data.token;     
-      });
-  }
+  
+  
 })
 
 $("#host-join").click(function (e) {
@@ -63,9 +53,8 @@ $("#join-form").submit(async function (e) {
   } catch (error) {
     console.error(error);
   } finally {
-    
     if (options.role === "host") {
-      // $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
+      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
       $("#success-alert").css("display", "block");
     }
     $("#leave").attr("disabled", false);
@@ -87,7 +76,7 @@ async function join() {
   }
 
   // join the channel
-await client.join(options.appid, options.channel, options.token || null,options.uid );
+   await client.join(options.appid, options.channel, options.token ,options.uid );
 
   if (options.role === "host") {
     // create local audio and video tracks
