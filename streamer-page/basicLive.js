@@ -47,8 +47,9 @@ $("#join-form").submit(async function (e) {
   } catch (error) {
     console.error(error);
   } finally {
+    
     if (options.role === "host") {
-      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
+      // $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
       $("#success-alert").css("display", "block");
     }
     $("#leave").attr("disabled", false);
