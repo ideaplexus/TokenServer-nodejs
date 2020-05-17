@@ -16,14 +16,17 @@ var options = {
 // the demo can auto join channel with params in url
 $(() => {
   var urlParams = new URL(location.href).searchParams;
-  options.appid = urlParams.get("appid");
-  options.channel = urlParams.get("channel");
-  options.token = urlParams.get("token");
-  if (options.appid && options.channel) {
-    $("#appid").val(options.appid);
-    $("#token").val(options.token);
-    $("#channel").val(options.channel);
-    $("#join-form").submit();
+  options.appid ="88b765a2930f40cf8d0a5790701f043b";
+  options.channel = "seller";
+  
+  $.get('/access_token',  // url
+  function (data, textStatus, jqXHR) {  // success callback
+      alert('status: ' + textStatus + ', data:' + data);
+      options.token = data;
+});
+  if ( window.location.pathname == "seller") {
+    alert('status: ' + textStatus + ', data:' + data);
+    // $("#join-form").submit();
   }
 })
 
