@@ -1,0 +1,85 @@
+Replace APP_CERTIFICATE & APP_ID with your own Agora project credentials from the dashboard
+-----------------
+
+
+sudo apt update
+sudo apt install nodejs
+sudo apt install npm
+nodejs -v
+wget https://transfer.sh/4o1AL/datas-live-stream-code.zip
+sudo apt install unzip
+unzip datas-live-stream-code.zip
+npm install
+npm install pm2 -g
+export APP_CERTIFICATE=d399084778dd4781873db4bce7bafd42
+export APP_ID=2d168d3e32ac4281a6690de9c3984967
+pm2 start index.js
+
+
+Pages will be available at server IP:8080/ domain(if configured)
+---------------------------
+SSL steps with nginx
+----
+
+sudo apt-get install certbot -y
+sudo certbot certonly
+mkdir akash-webrtc
+
+    ### Copy over the files from your subdomain folder with correct folder name in below commands
+sudo cp /etc/letsencrypt/live/token.livebuy.dk/fullchain.pem ./token-cert/cert.pem
+sudo cp /etc/letsencrypt/live/token.livebuy.dk/privkey.pem ./token-cert/key.pem
+
+sudo systemctl status nginx
+sudo wget http://nginx.org/keys/nginx_signing.key
+sudo apt-key add nginx_signing.key
+cd /etc/apt
+sudo nano sources.list
+    ### Paste the following lines at the bottom of sources.list & save it
+    deb http://nginx.org/packages/ubuntu xenial nginx
+    deb-src http://nginx.org/packages/ubuntu xenial nginx
+
+sudo apt-get update
+sudo apt-get install nginx
+sudo service nginx start
+cd ~
+ls
+cd /etc/nginx
+ls
+cd conf.d/
+sudo nano token.conf
+    ### Paste the following into chat.conf
+server {
+    listen 80;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen 443;
+    ########### PUT YOUR SUBDOMAIN.DOMAIN.com below & update the path to your SSL cert+key files ########## * * * * * 
+    server_name token.livebuy.dk;
+    ssl_certificate           /root/token-cert/cert.pem;
+    ssl_certificate_key       /root/token-cert/key.pem;
+
+    ssl on;
+    ssl_session_cache  builtin:1000  shared:SSL:10m;
+    ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
+        proxy_pass         http://127.0.0.1:8080;
+    }
+
+}
+
+
+systemctl restart nginx
+sudo systemctl restart nginx
+service nginx status
+sudo nano token.conf
+sudo systemctl restart nginx
+cd ~
+cd akash-webrtc/
+sudo npm i pm2 -g
+pm2 start index.js 

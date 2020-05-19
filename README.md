@@ -1,24 +1,26 @@
-# Sample NodeJS Token Server@express
+# Live stream seller/user pages & user code & Agora Token Server
 
-*阅读中文版本: [中文](README.zh.md)*
+* export APP_CERTIFICATE=045c9d749cce45d888b9597e906d9c4c
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AgoraIO-Community/TokenServer-nodejs)
+* export APP_ID=88b765a2930f40cf8d0a5790701f043b
 
-1. Click the deploy link above to start
-2. Fill in your app name, APP_ID and APP_CERTIFICATE and press `Deploy App`
-3. Make a cup of coffee and wait for heroku to finish :)
-4. Once done you will get an url for your instance, try accessing `https://<heroku url>/access_token?channel=test&uid=1234` to check if it works
 
-## Dashboard
+## Generating APP credentials from Agora dashboard
 
 You can get your appID and appCertificate on Agora developer dashboard (http://dashboard.agora.io).
 
-## 联系我们
-- 完整的 API 文档见 [文档中心](https://docs.agora.io/cn/)
-- 如果在集成中遇到问题, 你可以到 [开发者社区](https://dev.agora.io/cn/) 提问
-- 如果有售前咨询问题, 可以拨打 400 632 6626，或加入官方Q群 12742516 提问
-- 如果需要售后技术支持, 你可以在 [Agora Dashboard](https://dashboard.agora.io) 提交工单
-- 如果发现了示例代码的 bug, 欢迎提交 [issue](https://github.com/AgoraIO-Community/TokenServer-nodejs/issues)
+## After installing node.js on server
 
-## 代码许可
-The MIT License (MIT).
+* cd into the project
+
+* npm i
+
+* export APP_CERTIFICATE=045c9d749cce45d888b9597e906d9c4c
+
+* export APP_ID=88b765a2930f40cf8d0a5790701f043b
+
+* node index.js
+
+After this the seller page should be usable at /seller.html & user page is avalible at root / of the server address/domain.
+
+You can add your own SSL certificates by using reverse proxy on the node port in nginx & free LetsEncrypt certificates.
